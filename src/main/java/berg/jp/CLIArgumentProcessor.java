@@ -16,6 +16,11 @@ public final class CLIArgumentProcessor {
         return isStatic;
     }
 
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+
     public String getVisibility() {
         return visibility;
     }
@@ -72,6 +77,11 @@ public final class CLIArgumentProcessor {
             description = "Whether the declared method is static"
     )
     private boolean isStatic = false;
+    @Parameter(
+            names = {"-f", "--final"},
+            description = "Whether the declared method is final"
+    )
+    private boolean isFinal = false;
 
     @Parameter(
             names = {"-v", "--visibility"},
@@ -150,6 +160,7 @@ public final class CLIArgumentProcessor {
         );
 
         if (isStatic()) wrapper.setStatic();
+        if (isFinal()) wrapper.setFinal();
 
         int i = 0;
         for (; i < getArgumentValues().size(); i++) {
@@ -200,6 +211,7 @@ public final class CLIArgumentProcessor {
 
         addAttribute(sb, "visibility", getVisibility());
         addAttribute(sb, "is static", String.valueOf(isStatic()));
+        addAttribute(sb, "is final", String.valueOf(isFinal()));
         addAttribute(sb, "return type", getReturnType());
         addAttribute(sb, "method name", getMethodName());
         addAttribute(sb, "output", getOutput().toString());

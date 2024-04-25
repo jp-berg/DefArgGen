@@ -14,7 +14,7 @@ public final class DefaultArgumentWrapper {
 
     private int argumentsWithDefaultValues = 0;
 
-    private boolean isStatic = false;
+    private boolean isStatic = false, isFinal = false;
     private String visibility = "",
             signature;
     private final String methodBody,
@@ -141,6 +141,15 @@ public final class DefaultArgumentWrapper {
         return isStatic;
     }
 
+    public DefaultArgumentWrapper setFinal() {
+        isFinal = true;
+        return this;
+    }
+
+    private boolean isFinal() {
+        return isFinal;
+    }
+
     private String getVisibility() {
         return visibility;
     }
@@ -157,9 +166,8 @@ public final class DefaultArgumentWrapper {
         if (signature == null) {
             stringBuilder.setLength(0);
             stringBuilder.append(getVisibility());
-            if (isStatic()) {
-                stringBuilder.append(" static");
-            }
+            if (isStatic()) stringBuilder.append(" static");
+            if (isFinal()) stringBuilder.append(" final");
             stringBuilder.append(" ");
             stringBuilder.append(getReturnType());
             stringBuilder.append(" ");
