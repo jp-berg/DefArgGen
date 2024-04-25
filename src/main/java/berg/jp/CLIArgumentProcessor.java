@@ -4,7 +4,9 @@ import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.beust.jcommander.converters.FileConverter;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public final class CLIArgumentProcessor {
         return methodName;
     }
 
-    public String getOutput() {
+    public File getOutput() {
         return output;
     }
 
@@ -93,9 +95,10 @@ public final class CLIArgumentProcessor {
 
     @Parameter(
             names = {"-o", "--output"},
-            description = "The output-file (if not provided the output will go to stdout"
+            description = "The output-file (if not provided the output will go to stdout",
+            converter = FileConverter.class
     )
-    private String output;
+    private File output;
 
     @Parameter(names = {"-h", "--help"}, description = "Show this message", help = true)
     private boolean help = false;
@@ -198,7 +201,7 @@ public final class CLIArgumentProcessor {
         addAttribute(sb, "is static", String.valueOf(isStatic()));
         addAttribute(sb, "return type", getReturnType());
         addAttribute(sb, "method name", getMethodName());
-        addAttribute(sb, "output", getOutput());
+        addAttribute(sb, "output", getOutput().toString());
         addAttribute(sb, "argument-types", getArgumentTypes().toString());
         addAttribute(sb, "argument-names", getArgumentNames().toString());
         addAttribute(sb, "argument-values", getArgumentValues().toString());

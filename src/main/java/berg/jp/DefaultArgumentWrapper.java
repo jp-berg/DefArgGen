@@ -1,6 +1,10 @@
 package berg.jp;
 
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -243,11 +247,14 @@ public final class DefaultArgumentWrapper {
         if(filepath.trim().isEmpty()){
             throw new IllegalArgumentException("filepath is not defined");
         }
-        try(RuntimeExceptionWriter writer = new RuntimeExceptionWriter(filepath)){
+        wrappersToFile(new File(filepath));
+    }
+
+    public void wrappersToFile(File file) throws Exception {
+        Objects.requireNonNull(file);
+        try (RuntimeExceptionWriter writer = new RuntimeExceptionWriter(file)) {
             generateWrappers(writer::write);
         }
-
-
     }
 
 

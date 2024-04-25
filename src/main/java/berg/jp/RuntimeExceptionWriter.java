@@ -1,13 +1,15 @@
 package berg.jp;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 final class RuntimeExceptionWriter implements AutoCloseable {
     private final FileWriter fileWriter;
 
-    RuntimeExceptionWriter(String filepath) throws IOException {
-        this.fileWriter = new FileWriter(filepath);
+
+    RuntimeExceptionWriter(File file) throws IOException {
+        this.fileWriter = new FileWriter(file);
     }
 
     public void write(String s) {
