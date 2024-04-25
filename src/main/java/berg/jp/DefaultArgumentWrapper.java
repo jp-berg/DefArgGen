@@ -104,40 +104,23 @@ public final class DefaultArgumentWrapper {
         }
     }
 
-    public DefaultArgumentWrapper(Visibility v, Class returnType, String name, boolean isStatic){
-        this(v.toString(), returnType.getSimpleName(), name, isStatic);
-    }
-
-    public DefaultArgumentWrapper(Visibility v, Class returnType, String name){
-        this(v, returnType, name, false);
+    public DefaultArgumentWrapper(Visibility v, Class returnType, String name) {
+        this(v.toString(), returnType.getSimpleName(), name);
     }
 
     public DefaultArgumentWrapper(Class returnType, String name){
         this(Visibility.PACKAGE, returnType, name);
     }
 
-    public DefaultArgumentWrapper(Class returnType, String name, boolean isStatic){
-        this(Visibility.PACKAGE, returnType, name, isStatic);
-    }
-
     DefaultArgumentWrapper(String returnType, String name){
         this(Visibility.PACKAGE.toString(), returnType, name);
     }
 
-    DefaultArgumentWrapper(String returnType, String name, boolean isStatic){
-        this(Visibility.PACKAGE.toString(), returnType, name, isStatic);
-    }
-
     DefaultArgumentWrapper(String visibility, String returnType, String name){
-        this(visibility, returnType, name, false);
-    }
-
-    DefaultArgumentWrapper(String visibility, String returnType, String name, boolean isStatic){
         Objects.requireNonNull(visibility);
         Objects.requireNonNull(returnType);
         validateIdentifier(name);
 
-        this.isStatic = isStatic;
         this.visibility = visibility;
         this.returnType = returnType;
         this.name = name;
@@ -147,6 +130,11 @@ public final class DefaultArgumentWrapper {
         }else{
             methodBody = "){\n\treturn " + name + "(";
         }
+    }
+
+    public DefaultArgumentWrapper setStatic() {
+        isStatic = true;
+        return this;
     }
 
     private boolean isStatic() {

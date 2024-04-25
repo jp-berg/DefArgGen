@@ -146,9 +146,10 @@ public final class CLIArgumentProcessor {
         var wrapper = new DefaultArgumentWrapper(
                 getVisibility(),
                 getReturnType(),
-                getMethodName(),
-                isStatic()
+                getMethodName()
         );
+
+        if (isStatic()) wrapper.setStatic();
 
         int i = 0;
         for (; i < getArgumentValues().size(); i++) {
