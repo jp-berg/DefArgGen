@@ -145,6 +145,10 @@ public final class DefaultArgumentWrapper {
         }
     }
 
+    private String getSignature() {
+        return signature;
+    }
+
     public DefaultArgumentWrapper addArgument(Class type, String name, String value) {
         return addArgument(type.getSimpleName(), name, value);
 
@@ -183,7 +187,7 @@ public final class DefaultArgumentWrapper {
 
     private String constructMethod(ArrayList<Argument> arguments){
         stringBuilder.setLength(0);
-        stringBuilder.append(signature);
+        stringBuilder.append(getSignature());
 
         stringBuilder2.setLength(0);
         stringBuilder2.append(methodBody);
