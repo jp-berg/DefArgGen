@@ -1,4 +1,4 @@
-package berg.jp;
+package DefArgGen;
 
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.JCommander;

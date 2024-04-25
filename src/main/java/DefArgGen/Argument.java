@@ -1,4 +1,4 @@
-package berg.jp;
+package DefArgGen;
 
 final class Argument implements Cloneable {
     private String string;

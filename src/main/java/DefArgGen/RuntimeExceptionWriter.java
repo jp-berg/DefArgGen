@@ -1,4 +1,4 @@
-package berg.jp;
+package DefArgGen;
 
 import java.io.File;
 import java.io.FileWriter;

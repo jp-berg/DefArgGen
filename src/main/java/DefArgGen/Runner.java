@@ -1,4 +1,4 @@
-package berg.jp;
+package DefArgGen;
 
 public class Runner {
 
