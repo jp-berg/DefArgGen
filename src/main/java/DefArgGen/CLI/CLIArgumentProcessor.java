@@ -1,6 +1,6 @@
 package DefArgGen.CLI;
 
-import DefArgGen.Utils.DefaultArgumentWrapper;
+import DefArgGen.Utils.DefaultArgumentWrapperIntern;
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -153,8 +153,8 @@ public final class CLIArgumentProcessor {
         }
     }
 
-    public DefaultArgumentWrapper createDefaultArgumentWrapper() {
-        var wrapper = new DefaultArgumentWrapper(
+    public DefaultArgumentWrapperIntern createDefaultArgumentWrapper() {
+        var wrapper = new DefaultArgumentWrapperIntern(
                 getVisibility(),
                 getReturnType(),
                 getMethodName()

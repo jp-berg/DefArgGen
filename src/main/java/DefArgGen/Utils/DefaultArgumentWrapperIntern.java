@@ -1,5 +1,6 @@
 package DefArgGen.Utils;
 
+import DefArgGen.Core.DefaultArgumentWrapper;
 import DefArgGen.Core.Visibility;
 
 import java.io.File;
@@ -10,7 +11,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-public final class DefaultArgumentWrapper {
+public sealed class DefaultArgumentWrapperIntern permits DefaultArgumentWrapper {
 
     public final int MAX_NUMBER_ARGUMENTS_WITH_DEFAULT_VALUES = 22;
 
@@ -106,19 +107,12 @@ public final class DefaultArgumentWrapper {
         }
     }
 
-    public DefaultArgumentWrapper(Visibility v, Class returnType, String name) {
-        this(v.toString(), returnType.getSimpleName(), name);
-    }
 
-    public DefaultArgumentWrapper(Class returnType, String name){
-        this(Visibility.PACKAGE, returnType, name);
-    }
-
-    DefaultArgumentWrapper(String returnType, String name){
+    public DefaultArgumentWrapperIntern(String returnType, String name) {
         this(Visibility.PACKAGE.toString(), returnType, name);
     }
 
-    DefaultArgumentWrapper(String visibility, String returnType, String name){
+    public DefaultArgumentWrapperIntern(String visibility, String returnType, String name) {
         Objects.requireNonNull(visibility);
         Objects.requireNonNull(returnType);
         validateIdentifier(name);
@@ -134,7 +128,7 @@ public final class DefaultArgumentWrapper {
         }
     }
 
-    public DefaultArgumentWrapper setStatic() {
+    public DefaultArgumentWrapperIntern setStatic() {
         isStatic = true;
         return this;
     }
@@ -143,7 +137,7 @@ public final class DefaultArgumentWrapper {
         return isStatic;
     }
 
-    public DefaultArgumentWrapper setFinal() {
+    public DefaultArgumentWrapperIntern setFinal() {
         isFinal = true;
         return this;
     }
@@ -180,17 +174,8 @@ public final class DefaultArgumentWrapper {
         return signature;
     }
 
-    public DefaultArgumentWrapper addArgument(Class type, String name, String value) {
-        return addArgument(type.getSimpleName(), name, value);
 
-    }
-
-    public DefaultArgumentWrapper addArgument(Class type, String name) {
-        return addArgument(type.getSimpleName(), name);
-
-    }
-
-    DefaultArgumentWrapper addArgument(String type, String name, String value) {
+    public DefaultArgumentWrapperIntern addArgument(String type, String name, String value) {
         Objects.requireNonNull(type);
         validateIdentifier(name);
         if(usedIdentifiers.contains(name)){
@@ -206,7 +191,7 @@ public final class DefaultArgumentWrapper {
         return this;
     }
 
-    DefaultArgumentWrapper addArgument(String type, String name) {
+    public DefaultArgumentWrapperIntern addArgument(String type, String name) {
         return addArgument(type, name, null);
     }
 
