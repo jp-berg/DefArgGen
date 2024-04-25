@@ -1,4 +1,4 @@
-package DefArgGen;
+package DefArgGen.Utils;
 
 final class Argument implements Cloneable {
     private String string;

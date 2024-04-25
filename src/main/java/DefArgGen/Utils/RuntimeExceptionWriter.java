@@ -1,4 +1,4 @@
-package DefArgGen;
+package DefArgGen.Utils;
 
 import java.io.File;
 import java.io.FileWriter;

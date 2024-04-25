@@ -1,4 +1,6 @@
-package DefArgGen;
+package DefArgGen.Utils;
+
+import DefArgGen.Core.Visibility;
 
 import java.io.File;
 import java.util.ArrayList;

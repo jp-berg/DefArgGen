@@ -1,4 +1,6 @@
-package DefArgGen;
+package DefArgGen.CLI;
+
+import DefArgGen.Utils.DefaultArgumentWrapper;
 
 public class Runner {
 
