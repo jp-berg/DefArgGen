@@ -53,6 +53,18 @@ public final class CLIArgumentProcessor {
         return help;
     }
 
+    public List<String> getArgumentNames() {
+        return argumentNames;
+    }
+
+    public List<String> getArgumentValues() {
+        return argumentValues;
+    }
+
+    public List<String> getArgumentTypes() {
+        return argumentTypes;
+    }
+
     @Parameter(
             names = {"-s", "--static"},
             description = "Whether the declared method is static"
@@ -88,17 +100,66 @@ public final class CLIArgumentProcessor {
     @Parameter(names = {"-h", "--help"}, description = "Show this message", help = true)
     private boolean help = false;
 
+    @Parameter(
+            names = {"-an", "--argument-names"},
+            required = true,
+            description = "The names of the method-arguments",
+            variableArity = true
+    )
+    private List<String> argumentNames;
+
+    @Parameter(
+            names = {"-av", "--argument-values"},
+            required = true,
+            description = "The default-values of the method-arguments",
+            variableArity = true
+    )
+    private List<String> argumentValues;
+
+    @Parameter(
+            names = {"-at", "--argument-types"},
+            required = true,
+            description = "The types of the method-arguments. Must match 'argument-names' in length",
+            variableArity = true
+    )
+    private List<String> argumentTypes;
+
+    private void validateArguments() {
+        if (isHelp()) return;
+        var types = getArgumentTypes();
+        var names = getArgumentNames();
+        var values = getArgumentValues();
+
+        if (names.size() != types.size()) {
+            throw new ParameterException("Number of argument-names (" + names.size() + ") does not match number of argument-types (" + types.size() + ")");
+        }
+
+        if (values.size() > types.size()) {
+            throw new ParameterException("More argument-values (" + values.size() + ") than method-arguments (" + types.size() + ")");
+        }
+    }
+
     public DefaultArgumentWrapper createDefaultArgumentWrapper() {
-        return new DefaultArgumentWrapper(
+        var wrapper = new DefaultArgumentWrapper(
                 getVisibility(),
                 getReturnType(),
                 getMethodName(),
                 isStatic()
         );
+
+        int i = 0;
+        for (; i < getArgumentValues().size(); i++) {
+            wrapper.addArgument(getArgumentTypes().get(i), getArgumentNames().get(i), getArgumentValues().get(i));
+        }
+        for (; i < getArgumentNames().size(); i++) {
+            wrapper.addArgument(getArgumentTypes().get(i), getArgumentNames().get(i));
+        }
+        return wrapper;
     }
 
     private CLIArgumentProcessor() {
     }
+
 
     public static CLIArgumentProcessor process(String[] argv) {
         var args = new CLIArgumentProcessor();
@@ -129,7 +190,7 @@ public final class CLIArgumentProcessor {
         sb.append("'\n");
     }
 
-    public String toString() {
+    public String debugString() {
         StringBuilder sb = new StringBuilder();
         sb.append("PARSED ARGUMENTS:\n");
 
@@ -138,6 +199,9 @@ public final class CLIArgumentProcessor {
         addAttribute(sb, "return type", getReturnType());
         addAttribute(sb, "method name", getMethodName());
         addAttribute(sb, "output", getOutput());
+        addAttribute(sb, "argument-types", getArgumentTypes().toString());
+        addAttribute(sb, "argument-names", getArgumentNames().toString());
+        addAttribute(sb, "argument-values", getArgumentValues().toString());
 
         return sb.toString();
     }
