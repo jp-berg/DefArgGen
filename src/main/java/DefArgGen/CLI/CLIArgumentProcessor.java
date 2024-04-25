@@ -187,6 +187,7 @@ public final class CLIArgumentProcessor {
         try {
             jc.parse(argv);
             printHelp = args.isHelp();
+            args.validateArguments();
         } catch (ParameterException e) {
             System.err.println(e.getMessage());
             printHelp = true;
