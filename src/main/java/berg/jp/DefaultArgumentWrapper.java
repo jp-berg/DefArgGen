@@ -16,10 +16,10 @@ public final class DefaultArgumentWrapper {
 
     private boolean isStatic = false;
     private String visibility = "",
-            returnType,
-            name,
             signature;
-    private final String methodBody;
+    private final String methodBody,
+            returnType,
+            name;
 
     private final StringBuilder stringBuilder = new StringBuilder(),
                                 stringBuilder2 = new StringBuilder();
