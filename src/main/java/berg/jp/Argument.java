@@ -16,6 +16,9 @@ final class Argument implements Cloneable {
 
     Argument(String type, String name, String value) {
         this(type, name);
+        if (value != null && value.isEmpty()) {
+            value = "\"\"";
+        }
         this.value = value;
     }
 
