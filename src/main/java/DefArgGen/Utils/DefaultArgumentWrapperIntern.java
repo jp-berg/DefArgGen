@@ -267,7 +267,7 @@ public sealed class DefaultArgumentWrapperIntern permits DefaultArgumentWrapper 
 
     public void wrappersToFile(String filepath) throws Exception {
         Objects.requireNonNull(filepath);
-        if(filepath.trim().isEmpty()){
+        if (filepath.isBlank()) {
             throw new IllegalArgumentException("filepath is not defined");
         }
         wrappersToFile(new File(filepath));
