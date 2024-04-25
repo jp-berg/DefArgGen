@@ -14,6 +14,9 @@ public final class DefaultArgumentWrapper {
 
     private int argumentsWithDefaultValues = 0;
 
+    private boolean isStatic = false;
+    private String visibility = "";
+
     private final String signature,
                         methodBody;
 
@@ -133,6 +136,7 @@ public final class DefaultArgumentWrapper {
         Objects.requireNonNull(returnType);
         validateIdentifier(name);
 
+        this.visibility = visibility;
         String signature = visibility;
         signature = (isStatic) ? signature + " static" : signature;
         signature += " " + returnType + " " + name + "(";
@@ -143,6 +147,10 @@ public final class DefaultArgumentWrapper {
         }else{
             methodBody = "){\n\treturn " + name + "(";
         }
+    }
+
+    private String getVisibility() {
+        return visibility;
     }
 
     private String getSignature() {
