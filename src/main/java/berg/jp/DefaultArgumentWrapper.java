@@ -17,10 +17,9 @@ public final class DefaultArgumentWrapper {
     private boolean isStatic = false;
     private String visibility = "",
             returnType,
-            name;
-
-    private final String signature,
-                        methodBody;
+            name,
+            signature;
+    private final String methodBody;
 
     private final StringBuilder stringBuilder = new StringBuilder(),
                                 stringBuilder2 = new StringBuilder();
@@ -142,10 +141,6 @@ public final class DefaultArgumentWrapper {
         this.visibility = visibility;
         this.returnType = returnType;
         this.name = name;
-        String signature = visibility;
-        signature = (isStatic) ? signature + " static" : signature;
-        signature += " " + returnType + " " + name + "(";
-        this.signature = signature;
 
         if(returnType.equals("void")){
             methodBody = "){\n\t" + name + "(";
@@ -171,6 +166,19 @@ public final class DefaultArgumentWrapper {
     }
 
     private String getSignature() {
+        if (signature == null) {
+            stringBuilder.setLength(0);
+            stringBuilder.append(getVisibility());
+            if (isStatic()) {
+                stringBuilder.append(" static");
+            }
+            stringBuilder.append(" ");
+            stringBuilder.append(getReturnType());
+            stringBuilder.append(" ");
+            stringBuilder.append(getName());
+            stringBuilder.append("(");
+            signature = stringBuilder.toString();
+        }
         return signature;
     }
 
