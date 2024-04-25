@@ -145,15 +145,17 @@ public final class DefaultArgumentWrapper {
         }
     }
 
-    public void addArgument(Class type, String name, String value){
-        addArgument(type.getSimpleName(), name, value);
+    public DefaultArgumentWrapper addArgument(Class type, String name, String value) {
+        return addArgument(type.getSimpleName(), name, value);
+
     }
 
-    public void addArgument(Class type, String name){
-        addArgument(type.getSimpleName(), name);
+    public DefaultArgumentWrapper addArgument(Class type, String name) {
+        return addArgument(type.getSimpleName(), name);
+
     }
 
-    void addArgument(String type, String name, String value){
+    DefaultArgumentWrapper addArgument(String type, String name, String value) {
         Objects.requireNonNull(type);
         validateIdentifier(name);
         if(usedIdentifiers.contains(name)){
@@ -166,10 +168,11 @@ public final class DefaultArgumentWrapper {
         }
         arguments.add(new Argument(type, name, value));
         usedIdentifiers.add(name);
+        return this;
     }
 
-    void addArgument(String type, String name){
-        addArgument(type, name, null);
+    DefaultArgumentWrapper addArgument(String type, String name) {
+        return addArgument(type, name, null);
     }
 
     private void trimTrailingCommas(StringBuilder sb){
