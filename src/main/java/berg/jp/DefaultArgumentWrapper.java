@@ -134,7 +134,7 @@ public final class DefaultArgumentWrapper {
         validateIdentifier(name);
 
         String signature = visibility;
-        signature = (isStatic)? signature += " static": signature;
+        signature = (isStatic) ? signature + " static" : signature;
         signature += " " + returnType + " " + name + "(";
         this.signature = signature;
 
