@@ -136,7 +136,6 @@ public final class DefaultArgumentWrapper {
         Objects.requireNonNull(returnType);
         validateIdentifier(name);
 
-        this.isStatic = isStatic;
         this.visibility = visibility;
         String signature = visibility;
         signature = (isStatic) ? signature + " static" : signature;
@@ -150,16 +149,11 @@ public final class DefaultArgumentWrapper {
         }
     }
 
-    private boolean isStatic() {
-        return isStatic;
-    }
-
     private String getVisibility() {
         return visibility;
     }
 
     private String getSignature() {
-        stringBuilder.append(getVisibility());
         return signature;
     }
 
